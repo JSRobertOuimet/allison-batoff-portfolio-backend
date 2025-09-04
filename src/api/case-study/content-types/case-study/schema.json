@@ -26,11 +26,12 @@
       "type": "string",
       "required": true
     },
-    "year": {
-      "type": "integer"
-    },
     "description": {
       "type": "text",
+      "required": true
+    },
+    "year": {
+      "type": "string",
       "required": true
     },
     "body": {
