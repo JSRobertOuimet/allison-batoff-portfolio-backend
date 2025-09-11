@@ -1,32 +1,50 @@
 export default {
     async login(ctx) {
-        const { password } = ctx.request.body;
+        try {
+            const { password } = ctx.request.body;
 
-        if (password === process.env.PAGE_PASSWORD) {
-            ctx.cookies.set("auth", "true", {
-                httpOnly: true,
-                sameSite: "lax",
-                secure: process.env.NODE_ENV === "production",
-            });
-            ctx.send({ success: true });
-        } else {
-            ctx.status = 401;
-            ctx.send({ error: "Invalid password." });
+            if (!password) {
+                ctx.status = 400;
+                ctx.body = { error: "Missing password" };
+                return;
+            }
+
+            if (password === process.env.SECRET_PASSWORD) {
+                ctx.cookies.set("auth", "true", {
+                    httpOnly: true,
+                    sameSite: "lax",
+                    secure: process.env.NODE_ENV === "production",
+                });
+                ctx.body = { success: true };
+            } else {
+                ctx.status = 401;
+                ctx.body = { error: "Invalid password." };
+            }
+        } catch (err) {
+            // Log full error in Strapi console
+            strapi.log.error("Login route error:", err);
+
+            ctx.status = 500;
+            ctx.body = {
+                error: "Internal server error.",
+                details: err.message,
+                stack: err.stack, // (optional, remove in prod)
+            };
         }
     },
 
     async check(ctx) {
         const auth = ctx.cookies.get("auth");
         if (auth === "true") {
-            ctx.send({ authorized: true });
+            ctx.body = { authorized: true };
         } else {
             ctx.status = 401;
-            ctx.send({ error: "Unauthorized." });
+            ctx.body = { error: "Unauthorized." };
         }
     },
 
     async logout(ctx) {
         ctx.cookies.set("auth", null, { maxAge: 0 });
-        ctx.send({ success: true });
+        ctx.body = { success: true };
     },
 };
