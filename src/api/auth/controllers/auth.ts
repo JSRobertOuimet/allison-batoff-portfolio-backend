@@ -15,7 +15,10 @@ export default {
                 ctx.cookies.set("auth", "true", {
                     httpOnly: true,
                     sameSite: "none",
-                    secure: process.env.NODE_ENV === "production",
+                    secure:
+                        process.env.NODE_ENV === "production"
+                            ? true
+                            : false,
                 });
                 ctx.body = { success: true };
             } else {
