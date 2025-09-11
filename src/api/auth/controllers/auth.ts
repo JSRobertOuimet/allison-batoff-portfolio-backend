@@ -5,7 +5,7 @@ export default {
 
             if (!password) {
                 ctx.status = 400;
-                ctx.body = { error: "Missing password" };
+                ctx.body = { error: "Missing password." };
                 return;
             }
 
@@ -21,14 +21,13 @@ export default {
                 ctx.body = { error: "Invalid password." };
             }
         } catch (err) {
-            // Log full error in Strapi console
             strapi.log.error("Login route error:", err);
 
             ctx.status = 500;
             ctx.body = {
                 error: "Internal server error.",
                 details: err.message,
-                stack: err.stack, // (optional, remove in prod)
+                stack: err.stack,
             };
         }
     },
