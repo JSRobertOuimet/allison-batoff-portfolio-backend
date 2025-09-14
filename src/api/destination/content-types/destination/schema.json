@@ -22,13 +22,12 @@
         "audios"
       ]
     },
-    "location": {
+    "title": {
       "type": "string",
       "required": true
     },
     "slug": {
       "type": "uid",
-      "targetField": "location",
       "required": true
     },
     "description": {
