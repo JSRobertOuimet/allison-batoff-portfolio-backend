@@ -470,6 +470,7 @@ export interface ApiDestinationDestination extends Struct.CollectionTypeSchema {
       'api::destination.destination'
     > &
       Schema.Attribute.Private;
+    location: Schema.Attribute.String & Schema.Attribute.Required;
     photos: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
@@ -481,7 +482,6 @@ export interface ApiDestinationDestination extends Struct.CollectionTypeSchema {
       'images' | 'files' | 'videos' | 'audios'
     > &
       Schema.Attribute.Required;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

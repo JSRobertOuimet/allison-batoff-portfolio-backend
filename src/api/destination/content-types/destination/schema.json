@@ -22,7 +22,7 @@
         "audios"
       ]
     },
-    "title": {
+    "location": {
       "type": "string",
       "required": true
     },
